@@ -1,0 +1,14 @@
+;;a)
+(define (left-branch x)
+  (car x))
+(define (right-branch x)
+  (cdr x))
+
+;;b)
+(define (total-weight x)
+  (if (null? (right-branch x))
+      (left-branch x)
+      (+ (left-branch x)
+	 (total-weitht (right-branch x)))))
+
+;;c)

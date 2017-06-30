@@ -1,0 +1,21 @@
+
+
+(define (rand imperative)
+  (let ((x random-init))
+    (define (generate)
+      (lambda ()
+	(set! x (rand-update x))
+	x))
+    (define (reset)
+      (lambda (new)
+	(set! x new)))
+
+    (define (judge m)
+      (cond ((equ? (car m) 'generate)
+	     generate)
+	    ((equ? (car m) 'reset)
+	     (reset (cdr m)))))))
+
+
+	    
+    

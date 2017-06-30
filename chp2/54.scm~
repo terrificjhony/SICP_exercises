@@ -1,0 +1,6 @@
+(define (euqal? a b)
+  (if (and (null? a)
+	   (null? b))
+      #t
+      (if (= (car a) (car b))
+	  (equal? (cdr a) (cdr b)))))

@@ -1,0 +1,5 @@
+;;;a)
+(define (get-record value)
+  ((get '(car value) (record) (car value))))
+
+;;;b)

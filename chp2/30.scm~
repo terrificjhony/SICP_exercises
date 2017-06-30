@@ -1,0 +1,4 @@
+(define (square-tree x)
+  (cond ((null? x) nil)
+	((not (pair? x)) (square x))
+	(else (cons (square-tree (car x)) (square-tree (cdr x))))))

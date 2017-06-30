@@ -1,0 +1,12 @@
+;;because the first time the operaion is (cons nil A),this is a false move.
+;;the opertion should change the initial form nil to (list)
+(define (square-list items)
+            (define (iter things answer)
+              (if (null? things)
+                  answer
+                  (iter (cdr things)
+                        (cons answer
+                              (square (car things))))))
+            (iter items (list)))
+
+

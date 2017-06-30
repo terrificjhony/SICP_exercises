@@ -1,0 +1,6 @@
+(define (fringe x)
+  (if (null? (cdr x))
+      (car x)
+      (append (car x) (fringe (cdr x)))))
+
+	     

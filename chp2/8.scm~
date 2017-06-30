@@ -1,0 +1,6 @@
+(load "7.scm")
+(load "ch2support.scm")
+(define (sub-interval x y)
+  (make-interval (- (upper-bound x) (lower-bound y))
+		 (- (lower-bound x) (upper-bound y))))
+

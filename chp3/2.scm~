@@ -1,0 +1,7 @@
+(define (make-monitor f)
+  (define (mf tmp val)
+    (if (eq? val 'how-many-calls)
+	tmp
+	(begin (set! tmp (+ 1 tmp))
+	       (f val))))
+  (mf 0 val))
