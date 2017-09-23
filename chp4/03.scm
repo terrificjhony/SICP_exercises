@@ -1,0 +1,25 @@
+修改后的 eval ：
+
+::
+
+    (define (eval exp env)
+        (if (self-evaluating? exp)
+            exp
+            (let ((eval-proc (get 'eval (expression-type exp))))
+                (eval-proc (expression-content exp)
+                           env))))
+
+其中一个安装例子：
+
+::
+
+    (define (install-variable)
+        
+        (put 'eval '(variable)
+            (lambda (exp env)
+                (lookup-variable-value exp env)))
+
+        ...
+
+    )
+

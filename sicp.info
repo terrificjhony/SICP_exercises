@@ -1011,7 +1011,7 @@ abstracting procedures and data.
    In this chapter we will deal only with simple numerical data so that
 we can focus on the rules for building procedures.(1) In later chapters
 we will see that these same rules allow us to build procedures to
-manipulate compound data as well.
+manipulate compound dataas well.
 
 * Menu:
 

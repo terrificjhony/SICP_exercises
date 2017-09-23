@@ -1,0 +1,86 @@
+(define eval
+  (lambda (exp env)
+    (cond  ((number? exp) exp)
+	   ((symbol? exp) (lookup exp env))
+	   ((eq? (car exp) 'quote) (cadr exp))
+	   ((eq? (car exp) 'lambda) (list 'closure (cdr exp) env))
+	   ((eq? (car exp) 'cond)
+	    (evcond (cdr exp) env))
+	   (else (apply (eval (car exp) env)
+			(evlist (cdr exp) env))))))
+
+(define apply
+  (lambda (proc args)
+    (cond ((primitive? proc)
+	   (apply-primop proc args))
+	  ((eq? (car proc) 'closure)
+	   (eval (cadadr proc)
+		 (bind (caadr proc)
+		       args
+		       (caddr proc))))    ;*bind*
+	  (else error))))
+
+
+(define evlist
+  (lambda (l env)
+    (cond ((eq? l '()) '())
+	  (else
+	   (cons (eval (car l) env)
+		 (evlist (cdr l) env))))))
+
+
+(define evcond
+  (lambda (clauses env)
+    (cond ((eq? clauses '()) '())
+	  ((eq? (caar clauses) 'else)
+	   (eval (cadar clauses) env))
+	  ((false? (eval (caar clauses) env))
+	   (evcond (cdr clauses) env))
+	  (else
+	   (eval (cadar clauses) env)))))
+
+(define bind
+  (lambda (vars vals env)
+    (cosn (pair-up vars vals)
+	  env)))
+
+
+
+(eval '(((lambda (x)
+	   (lambda (y)
+	     (+ x y))) 3)4) <ezero>)
+==>
+(apply (eval '((lambda (x)
+		  (lambda (y)
+		    (+ x y))) 3) <ezero>)
+       (evlist '(4) <ezero>))
+==>
+(apply (eval '((lambda (x)
+		 (lambda (y)
+		   (+ x y))) 3) <ezero>)
+       (cons (eval '4 ,ezero>)
+	     (evlist '() <ezero>)))
+==>
+(apply (eval '((lambda (x)
+		 (lambda (y) (+ x y))) 3) <ezero>
+       (cons 4 '()))
+==>
+(apply (eval '((lambda (x)
+		 (lambda (y) (+ x y))) 3) <ezero>
+		 '(4)))
+
+==>
+(apply (apply (eval '(lambda (x)
+		       (lambda (y) (+ x y))) <zero>)
+	      '(3))
+i       '(4))
+==>
+(apply (apply '(closure ((x) (lambda (y) (+ x y))) <ezero>)
+	      '(3))
+       '(4))
+==>
+(apply (eval '(lambda (y) (+ x y)) <ezero>)
+       '(4))
+==>
+	     
+		  
